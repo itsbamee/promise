@@ -10,31 +10,27 @@
 <body>
   <script>
     /*
-      ES6의 promise가 나오기 전 동기화 처리 방법
-      : 동기화 되야하는 코드를 무조건 callback으로 전달
-      -- 콜백함수로 동기화처리 될 모든 코드를 묶어서 인수로 전달함으로써 callstack 입장에서 다음에 실행될(비동기적으로 동작될 수 있는) 코드를 원천봉쇄
-      -- callstack 입장에서는 이후에 실행될 모든 작업들이 인수로 전달되는 callback에 묶여있기 때문에 다음 callback이 실행되기 전까지는 다음에 처리해야할 업무 자체가 없는 것
-      --단점 : callback에 전달해야 하는 동기화 처리해야 할 코드 양이 많거나, 동기화 작업 단계가 많을수록 계속 callback depth가 늘어나므로 코드가독성이 떨어짐 (callback hell)
+      ES6에서 promise라는 동기화처리를 위한 새로운 문법체계 생성
+      Promise는 객체인데, 3가지의 내부 상태값을 가지고 있어서 각 내부 상태값의 변화단계에 따라서 특정함수(메서드)의 호출을 약속받는 객체
+      Promise의 상태
+      - pending : 특정 요청을 보낸 뒤 그 요청이 완료되기 전까지의 대기상태
+      - fulfilled : 요청이 성공적으로 완료된 상태
+      - rejected : 요청에 대한 응답이 실패되었을 때 동작되는 상태
+
+      Promise의 상태에 따라 호출할 수 있는 - 메서드
+      [pending]
+      [fullfiled] - then() : 동기적으로 실행되는 메서드
+      [reject] - catch() : 동기적으로 실행되는 메서드
+
+      Promise를 생성해야 되는 대표적인 경우 : 외부 data를 가져와야 하는 시간이 오래걸리는 구문(로직)을 실행할 때
+      ES6에서는 fetch라는 promise를 자체적으로 반환하는 외부데이터를 호출하는 반환함수를 제공하고 있음
     */
-    //지금 것은 예전엔 이렇게 비효율적으로 짰다는 것만 알면 됨
+
     function test(delay, callback) {
       setTimeout(() => {
         callback();
       }, delay)
     }
-    //start -> test1 -> test2 -> end
-
-    console.log('start');
-
-    test(2000, () => {
-      console.log('test1');
-
-      test(2000, () => {
-        console.log('test2');
-
-        console.log('end')
-      })
-    })
 
 
   </script>
