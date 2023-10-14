@@ -9,39 +9,39 @@
 </head>
 
 <body>
-  <section>
+  <section id="history"></section>
 
-  </section>
+
   <script>
-    const frame = document.querySelector('section');
+    const frame1 = document.querySelector('#history');
+    fetchData('DB/history.json');
 
-    fetchData('DB/members.json')
-
-    //data fetching 함수
+    //data fetching함수
     function fetchData(url) {
-      fetch(url).then(data => data.json()).then(json => {
-        console.log(json.members)
-        createList(json.members, frame)
-      })
+      fetch(url).then(data => data.json()).then(json => createHistory(json.history))
     }
 
-    //배열을 전달받아서 동적으로 반복돔 생성함수
-    function createList(arr, frame) {
+    //fetching된 데이터를 받아서 동적 DOM 생성함수
+    function createHistory(arr) {
       let tags = '';
+      let listTags = '';
 
-      arr.forEach((data, idx) => {
-        tags += `
-          <article>
-            <div class='pic'>
-              <img src='img/${data.pic}' alt=${data.name}/>
-            </div>
-            <h2>${data.name}</h2>
-            <p>${data.position}</p>
-          </article>
-        `
+      arr.forEach(data => {
+        //tags변수에 프레임 요소 동적 생성
+        tags += `<h1>${Object.keys(data)[0]}</h1><ul></ul>`;
+
+        //listTags변수에 내부 목록 요소 동적 생성
+        Object.values(data).forEach(el => listTags += `<li>${el}</li>`);
       });
 
-      frame.innerHTML = tags;
+      //먼저 최상의 부모 요소에 부모요소 삽입
+      frame1.innerHTML = tags;
+
+      //부모요소안의 ul 프레임을 모두 찾음
+      const uls = document.querySelectorAll('ul');
+
+      //동적으로 생성된 ul을 모두 반복돌면서 listTags에 담겨있는 li요소를 삽입
+      uls.forEach(ul => ul.innerHTML = listTags);
     }
   </script>
 </body>
