@@ -9,31 +9,40 @@
 </head>
 
 <body>
+  <section>
+
+  </section>
   <script>
-    /*
-      JSON ('JavaScript Object Notation')
-      문자열 형태로 자바스크립트 객체구조를 표현한 표기방식의 데이터
-      JSON은 한번 객체형태로 parsing처리 필요
+    const frame = document.querySelector('section');
 
-      fetch(요청url) : JSON형식으로 반환받은 데이터를 promise로 return (= fetch 메서드 다음에 then, catch등을 이용해서 동기화처리 가능)
-    */
+    fetchData('DB/members.json')
 
-    /*
-      fetch('DB/members.json').then(data => {
-      //.json() body 객체로 전달받은 데이터를 객체 형태로 parsing
-      //해당 json 메서드로 promise 반환
-      return data.json()
-    })
-    .then
-    */
+    //data fetching 함수
+    function fetchData(url) {
+      fetch(url).then(data => data.json()).then(json => {
+        console.log(json.members)
+        createList(json.members, frame)
+      })
+    }
 
-    //fetch문의 반환받은 data를 promise로 리턴
-    //첫번째 then 구문에서 body 객체의 데이터를 json 메서드를 다시 parsing해서 다시 return
-    //두번째 then 구문에서 이전 then이 리턴한 parsing된 객체 데이터를 받아서 콘솔 출력
-    fetch('DB/members.json').then(data => data.json()).then(json => {
-      console.log(json)
-    })
+    //배열을 전달받아서 동적으로 반복돔 생성함수
+    function createList(arr, frame) {
+      let tags = '';
 
+      arr.forEach((data, idx) => {
+        tags += `
+          <article>
+            <div class='pic'>
+              <img src='img/${data.pic}' alt=${data.name}/>
+            </div>
+            <h2>${data.name}</h2>
+            <p>${data.position}</p>
+          </article>
+        `
+      });
+
+      frame.innerHTML = tags;
+    }
   </script>
 </body>
 
