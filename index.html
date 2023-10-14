@@ -9,23 +9,34 @@
 
 <body>
   <script>
-
+    /*
+      ES6의 promise가 나오기 전 동기화 처리 방법
+      : 동기화 되야하는 코드를 무조건 callback으로 전달
+      -- 콜백함수로 동기화처리 될 모든 코드를 묶어서 인수로 전달함으로써 callstack 입장에서 다음에 실행될(비동기적으로 동작될 수 있는) 코드를 원천봉쇄
+      -- callstack 입장에서는 이후에 실행될 모든 작업들이 인수로 전달되는 callback에 묶여있기 때문에 다음 callback이 실행되기 전까지는 다음에 처리해야할 업무 자체가 없는 것
+      --단점 : callback에 전달해야 하는 동기화 처리해야 할 코드 양이 많거나, 동기화 작업 단계가 많을수록 계속 callback depth가 늘어나므로 코드가독성이 떨어짐 (callback hell)
+    */
+    //지금 것은 예전엔 이렇게 비효율적으로 짰다는 것만 알면 됨
     function test(delay, callback) {
       setTimeout(() => {
         callback();
       }, delay)
     }
-    //순서1 - start 콘솔문 실행 (js callstack 처리)
+    //start -> test1 -> test2 -> end
+
     console.log('start');
-    //순서2 - test함수 호출하고 안쪽의 setTimeOut을 web api에게 전달만하고 끝 (callstack)
-    test(0, () => console.log('test1'));
-    //순서3 - 두번째 test함수 호출하고 마찬가지로 안쪽의 setTimeOut을 다시 web api에게 전달 (callstack)
-    test(0, () => console.log('test2'));
-    //순서4 - end 콘솔문 실행
-    console.log('end');
-    //순서5 - callstack이 넘긴 setTimeOut을 web api가 실행하고 그 값을 다시 event loop를 통해서 다시 callstack에 전달 (web api가 하는일)
-    //순서6 - callstack이 넘긴 두번째 setTimeOut을 web api가 실행하고 그 값을 다시 event loop를 통해서 다시 callstack에 전달 (web api가 하는일)
-    //web api에 다시 전달되면서 어그러진다. 
+
+    test(2000, () => {
+      console.log('test1');
+
+      test(2000, () => {
+        console.log('test2');
+
+        console.log('end')
+      })
+    })
+
+
   </script>
 </body>
 
