@@ -1,0 +1,34 @@
+{
+  "members": [
+    {
+      "name": "chinka",
+      "position": "family",
+      "pic": "member1.jpg"
+    },
+    {
+      "name": "emily",
+      "position": "vice president",
+      "pic": "member2.jpg"
+    },
+    {
+      "name": "benita",
+      "position": "ui desinner",
+      "pic": "member3.jpg"
+    },
+    {
+      "name": "sora",
+      "position": "back-end dev",
+      "pic": "member4.jpg"
+    },
+    {
+      "name": "emma",
+      "position": "project manager",
+      "pic": "member5.jpg"
+    },
+    {
+      "name": "tom",
+      "position": "front-end dev",
+      "pic": "member6.jpg"
+    },
+  ]
+}

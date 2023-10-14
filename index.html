@@ -5,65 +5,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>자바스크립트에서의 비동기, 동기화</title>
+  <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
   <script>
-    /*
-      ES6에서 promise라는 동기화처리를 위한 새로운 문법체계 생성
-      Promise는 객체인데, 3가지의 내부 상태값을 가지고 있어서 각 내부 상태값의 변화단계에 따라서 특정함수(메서드)의 호출을 약속받는 객체
-      Promise의 상태
-      - pending : 특정 요청을 보낸 뒤 그 요청이 완료되기 전까지의 대기상태
-      - fulfilled : 요청이 성공적으로 완료된 상태
-      - rejected : 요청에 대한 응답이 실패되었을 때 동작되는 상태
-
-      Promise의 상태에 따라 호출할 수 있는 - 메서드
-      [pending]
-      [fullfiled] - then() : 동기적으로 실행되는 메서드
-      [reject] - catch() : 동기적으로 실행되는 메서드
-
-      Promise를 생성해야 되는 대표적인 경우 : 외부 data를 가져와야 하는 시간이 오래걸리는 구문(로직)을 실행할 때
-      ES6에서는 fetch라는 promise를 자체적으로 반환하는 외부데이터를 호출하는 반환함수를 제공하고 있음
-
-      Promise를 통해서 동기화처리하는 방법
-      - web api의 간섭으로 비동기가 일어날만한 구문을 promise라는 생성자함수를 통해서 인스턴스형태의 객체로 내보내면 
-      - promise 생성자를 통해서 return된 객체의 상태변화에 따라 (pending, fullfiled, rejected) then, catch 문등을 동기적으로 호출가능
-    */
-
-    //function test(delay) {
-    //Promise 생성자 함수를 통해서 동기화처리해야될 코드를 통째로 프로미스 객체 형태로 리턴
-    //Promise 생성자 함수 내부에는 자동으로 res, rej라는 2개의 parameter로 함수가 전달되고, 해당 함수가 호출되는 시점이 then(res), catch(rej)문이 실행되는 시점
-
-    function test(delay) {
-      return new Promise((res, rej) => {
-        setTimeout(() => {
-          console.log('test');
-          const condition = true
-          if (condition) {
-            console.log('특정 로직이 성공적으로 수행되었을 때 실행될 구문')
-            res();
-          } else {
-            console.log('특정 로직의 구현이 실패해서 예외처리를 해야할 때')
-            rej();
-          }
-        }, delay)
-      })
-    }
-
-    console.log('start');
-    test(2000).then(() => console.log('success')).catch(() => console.log('errr'))
-
-    //es6이후에 특정 구문을 동기화 시키기 위해서는 then, catch문을 호출하면 되는데
-    //then, catch를 쓰기위한 조건 -> then, catch 앞쪽의 함수가 무조건 promise 객체를 반환해야 됨
-
-    //}
-
-    /*
-    console.log('start')
-    test(2000);
-    test(2000);
-    console.log('end')
-    */
 
 
   </script>
